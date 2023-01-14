@@ -39,7 +39,11 @@ function FooterBanner({footerBanner}: FooterBannerInterface) {
                         <button type={"button"}>{buttonText}</button>
                     </Link>
                 </div>
-                <img src={urlFor(image)} alt={product} className={'footer-banner-image'}/>
+                <img
+                    src={urlFor(image)}
+                    alt={product}
+                    className={'footer-banner-image'}
+                />
             </div>
         </div>
     );
