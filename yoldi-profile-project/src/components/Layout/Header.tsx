@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Flex, Text} from "@chakra-ui/react";
 import Image from "next/image";
-import User from "@/models/User";
+import {useUser} from "@/utils/swr";
 
 type HeaderProps = {};
 
 const Header: React.FC<HeaderProps> = () => {
-    const [user, _] = useState(new User());
+    const {user} = useUser();
 
     return (
         <Flex

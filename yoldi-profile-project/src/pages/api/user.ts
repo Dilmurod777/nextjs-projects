@@ -8,7 +8,7 @@ export default function handler(
 ) {
     const user = auth.currentUser;
 
-    if (user !== null) {
+    if (user) {
         res.status(200).json({
             status: 'ok',
             data: {
