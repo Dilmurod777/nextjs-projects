@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Box, Flex, Text} from "@chakra-ui/react";
 import InputField from "@/components/Auth/InputField";
 import SubmitButton from "@/components/Auth/SubmitButton";
+import {UserResponseData} from "@/utils/api";
 
 type AuthProps = {};
 
@@ -15,10 +16,14 @@ const Auth: React.FC<AuthProps> = () => {
         password: ''
     })
     const [passwordType, setPasswordType] = useState('password');
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
 
     const isFormValid = (): boolean => {
-        if (formData.name.trim().length < 1) {
-            return false;
+        if (authPage === AuthPage.Register) {
+            if (formData.name.trim().length < 1) {
+                return false;
+            }
         }
 
         const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
@@ -43,8 +48,48 @@ const Auth: React.FC<AuthProps> = () => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
+        try {
+            setLoading(true);
+            setError('')
+            if (authPage === AuthPage.Register) {
+                const response = await fetch(`/api/signup/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
 
+                const json: UserResponseData = await response.json();
+
+                if (json.status === 'ok') {
+                    console.log('submitHandler success', json.data)
+                } else if (json.status === 'not_ok') {
+                    setError(json.data as string);
+                }
+            } else if (authPage === AuthPage.Login) {
+                const response = await fetch(`/api/login/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+
+                const json: UserResponseData = await response.json();
+
+                if (json.status === 'ok') {
+                    console.log('submitHandler success', json.data)
+                } else if (json.status === 'not_ok') {
+                    setError(json.data as string);
+                }
+            }
+        } catch (e) {
+            console.log('submitHandler error', e)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -135,7 +180,17 @@ const Auth: React.FC<AuthProps> = () => {
                         />
                     </Flex>
 
+                    <Text
+                        fontSize={'12px'}
+                        fontWeight={400}
+                        color={'#ff0000'}
+                        textAlign={'center'}
+                        w={'100%'}
+                        textOverflow={'ellipsis'}
+                    >{error}</Text>
+
                     <SubmitButton
+                        isLoading={loading}
                         active={isFormValid()}
                         text={authPage === AuthPage.Register ? 'Создать аккаунт' : 'Войти'}
                         onSubmit={submitHandler}
