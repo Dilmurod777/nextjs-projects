@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Flex, Text} from "@chakra-ui/react";
+import InputField from "@/components/Auth/InputField";
 
 type AuthProps = {};
 
@@ -25,23 +26,28 @@ const Auth: React.FC<AuthProps> = () => {
                         fontSize={'30px'}
                         lineHeight={'140%'}
                         whiteSpace={'pre'}
+                        mb={'25px'}
                     >
                         {authPage === AuthPage.Register ? 'Регистрация\n в Yoldi Agency' : 'Вход в Yoldi Agency'}
                     </Text>
+
+                    <InputField/>
                 </Flex>
             </Flex>
             <Flex h={'72px'} w={'100%'} bgColor={'#ffffff'} alignItems={'center'} justifyContent={'center'} borderTop={'1px solid #E6E6E6'}>
                 <Text
                     fontWeight={400}
                     color={'#838383'}
-                >{authPage === AuthPage.Register ? 'Уже есть аккаунт?' : 'Еще нет аккаунта?'} <Text
+                    mr={1}
+                >{authPage === AuthPage.Register ? 'Уже есть аккаунт?' : 'Еще нет аккаунта?'}
+                </Text>
+                <Text
                     fontWeight={500}
                     color={'#000000'}
                     display={'inline'}
                     cursor={'pointer'}
                     onClick={() => {setAuthPage(authPage === AuthPage.Register ? AuthPage.Login : AuthPage.Register)}}
                 >{authPage === AuthPage.Register ? 'Войти' : 'Зарегистрироваться'}</Text>
-                </Text>
             </Flex>
         </Flex>
     );

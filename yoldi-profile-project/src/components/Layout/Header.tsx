@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Flex, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import User from "@/models/User";
@@ -6,7 +6,7 @@ import User from "@/models/User";
 type HeaderProps = {};
 
 const Header: React.FC<HeaderProps> = () => {
-    const user = User.getUser();
+    const [user, _] = useState(new User());
 
     return (
         <Flex

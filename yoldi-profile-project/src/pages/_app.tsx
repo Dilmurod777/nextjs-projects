@@ -10,7 +10,8 @@ const theme = extendTheme({
                 fontWeight: '500',
                 fontSize: '16px',
                 lineHeight: '25.6px',
-                color: '#000000'
+                color: '#000000',
+                useSelect: 'none'
             }
         }
     },
