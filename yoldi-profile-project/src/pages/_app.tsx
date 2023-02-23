@@ -11,7 +11,8 @@ const theme = extendTheme({
                 fontSize: '16px',
                 lineHeight: '25.6px',
                 color: '#000000',
-                useSelect: 'none'
+                userSelect: 'none',
+                boxSizing: 'border-box'
             }
         }
     },
