@@ -8,6 +8,8 @@ export default function handler(
 ) {
     const user = auth.currentUser;
 
+    console.log('/api/user', user)
+
     if (user) {
         res.status(200).json({
             status: 'ok',
@@ -20,9 +22,9 @@ export default function handler(
             }
         })
     } else {
-        res.status(200).json({
+        res.status(404).json({
             status: 'not_ok',
-            data: 'need_to_login'
+            data: ''
         })
     }
 }

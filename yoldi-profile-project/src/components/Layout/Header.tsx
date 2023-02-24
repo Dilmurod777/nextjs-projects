@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {Flex, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {useUser} from "@/utils/swr";
+import {useRouter} from "next/router";
 
 type HeaderProps = {};
 
 const Header: React.FC<HeaderProps> = () => {
     const {user} = useUser();
+    const router = useRouter();
 
     return (
         <Flex
@@ -63,6 +65,8 @@ const Header: React.FC<HeaderProps> = () => {
                     border={'1px solid'}
                     borderColor={'#d4d4d4'}
                     borderRadius={'5px'}
+                    cursor={'pointer'}
+                    onClick={() => router.replace('/auth').then()}
                 >
                     Войти
                 </Text>}
