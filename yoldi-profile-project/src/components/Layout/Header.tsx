@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Flex, Text} from "@chakra-ui/react";
 import Image from "next/image";
 import {useUser} from "@/utils/swr";
 import {useRouter} from "next/router";
+import {useEmailContext} from "@/utils/hooks";
 
 type HeaderProps = {};
 
 const Header: React.FC<HeaderProps> = () => {
-    const {user} = useUser();
+    const email = useEmailContext();
+    const {user} = useUser(email);
     const router = useRouter();
 
     return (

@@ -4,7 +4,8 @@ export type UserResponseData = {
         name: string;
         email: string;
         description?: string;
-        imageUrl?: string;
+        photoUrl?: string;
+        backdropUrl?: string;
     } | string;
 
     status: 'ok' | 'not_ok';

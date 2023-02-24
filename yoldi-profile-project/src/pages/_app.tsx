@@ -1,6 +1,9 @@
 import type {AppProps} from 'next/app'
 import {ChakraProvider, extendTheme} from '@chakra-ui/react'
 import Layout from "@/components/Layout/Layout";
+import {createContext} from "react";
+import {useEmail} from "@/utils/hooks";
+import { EmailContext } from '@/utils/context';
 
 const theme = extendTheme({
     styles: {
@@ -19,9 +22,13 @@ const theme = extendTheme({
 })
 
 export default function App({Component, pageProps}: AppProps) {
+    const [email, _] = useEmail()
+
     return <ChakraProvider theme={theme}>
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <EmailContext.Provider value={email}>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </EmailContext.Provider>
     </ChakraProvider>
 }

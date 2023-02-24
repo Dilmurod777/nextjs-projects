@@ -6,25 +6,39 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse<UserResponseData>
 ) {
-    const user = auth.currentUser;
+    const {email} = req.query;
+    const users = firestore.doc(`users/${email}`)
 
-    console.log('/api/user', user)
+    console.log('handler', email)
+    res.status(200).json({
+        status: 'ok',
+        data: {
+            uid: '',
+            name: '',
+            description: '',
+            email: email as string || '',
+            photoUrl: '',
+            backdropUrl: ''
+        }
+    })
 
-    if (user) {
-        res.status(200).json({
-            status: 'ok',
-            data: {
-                uid: user.uid,
-                name: 'Unknown',
-                email: user.email || '',
-                imageUrl: user.photoURL || '',
-                description: ''
-            }
-        })
-    } else {
-        res.status(404).json({
-            status: 'not_ok',
-            data: ''
-        })
-    }
+    // console.log('/api/user user', user)
+    //
+    // if (user) {
+    //     res.status(200).json({
+    //         status: 'ok',
+    //         data: {
+    //             uid: user.uid,
+    //             name: 'Unknown',
+    //             email: user.email || '',
+    //             imageUrl: user.photoURL || '',
+    //             description: ''
+    //         }
+    //     })
+    // } else {
+    //     res.status(404).json({
+    //         status: 'not_ok',
+    //         data: ''
+    //     })
+    // }
 }

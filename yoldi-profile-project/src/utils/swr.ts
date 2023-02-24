@@ -3,10 +3,11 @@ import {UserResponseData} from "@/utils/api";
 
 export const fetcher = (url: string) => fetch(url).then(r => r.json())
 
-export function useUser() {
-    const {data, error, isLoading} = useSWR(`/api/user`, fetcher)
+export function useUser(email: string) {
+    if (!email) return {user: null, isLoading: false, isError: false};
+    const {data, error, isLoading} = useSWR(`/api/user/${email}`, fetcher)
 
-    console.log('useUser', data, error, isLoading)
+    console.log('useUser', data, isLoading, error)
     if (!data) {
         return {
             user: null,
